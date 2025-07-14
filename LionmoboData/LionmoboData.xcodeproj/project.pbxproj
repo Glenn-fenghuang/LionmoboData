@@ -1,0 +1,524 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		589804312E1BC00900CE9C6D /* LionmoboData-Script */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 589804322E1BC00900CE9C6D /* Build configuration list for PBXAggregateTarget "LionmoboData-Script" */;
+			buildPhases = (
+				589804372E1BC01E00CE9C6D /* ShellScript */,
+			);
+			dependencies = (
+				589804362E1BC01600CE9C6D /* PBXTargetDependency */,
+			);
+			name = "LionmoboData-Script";
+			productName = "LionmoboData-Script";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		7A7F4AE9C4DC9F75DF694D50 /* Pods_LionmoboData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9C1BC55C7F8B9FA7D7A69ED /* Pods_LionmoboData.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		589804352E1BC01600CE9C6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5898041B2E1BBEF000CE9C6D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 589804232E1BBEF000CE9C6D;
+			remoteInfo = LionmoboData;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1AEA504CC554FC9C9A07859A /* Pods-LionmoboData.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LionmoboData.release.xcconfig"; path = "Target Support Files/Pods-LionmoboData/Pods-LionmoboData.release.xcconfig"; sourceTree = "<group>"; };
+		3F063AAF6874B1B301A91565 /* Pods-LionmoboData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LionmoboData.debug.xcconfig"; path = "Target Support Files/Pods-LionmoboData/Pods-LionmoboData.debug.xcconfig"; sourceTree = "<group>"; };
+		589804242E1BBEF000CE9C6D /* LionmoboData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LionmoboData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9C1BC55C7F8B9FA7D7A69ED /* Pods_LionmoboData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LionmoboData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5898042B2E1BBEF000CE9C6D /* Exceptions for "LionmoboData" folder in "LionmoboData" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				Core/LionmoboDataConfig.h,
+				Core/LionmoboDataCore.h,
+				LionmoboData.h,
+				Logging/LionmoboDataLogger.h,
+				Notification/LionmoboDataNotificationManager.h,
+			);
+			target = 589804232E1BBEF000CE9C6D /* LionmoboData */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		589804262E1BBEF000CE9C6D /* LionmoboData */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5898042B2E1BBEF000CE9C6D /* Exceptions for "LionmoboData" folder in "LionmoboData" target */,
+			);
+			path = LionmoboData;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		589804212E1BBEF000CE9C6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A7F4AE9C4DC9F75DF694D50 /* Pods_LionmoboData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5898041A2E1BBEF000CE9C6D = {
+			isa = PBXGroup;
+			children = (
+				589804262E1BBEF000CE9C6D /* LionmoboData */,
+				589804252E1BBEF000CE9C6D /* Products */,
+				D2958E29F0049E5E77196473 /* Pods */,
+				C39DCF170E6295344A44C591 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		589804252E1BBEF000CE9C6D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				589804242E1BBEF000CE9C6D /* LionmoboData.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C39DCF170E6295344A44C591 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E9C1BC55C7F8B9FA7D7A69ED /* Pods_LionmoboData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D2958E29F0049E5E77196473 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3F063AAF6874B1B301A91565 /* Pods-LionmoboData.debug.xcconfig */,
+				1AEA504CC554FC9C9A07859A /* Pods-LionmoboData.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5898041F2E1BBEF000CE9C6D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		589804232E1BBEF000CE9C6D /* LionmoboData */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5898042C2E1BBEF000CE9C6D /* Build configuration list for PBXNativeTarget "LionmoboData" */;
+			buildPhases = (
+				0695DA7F9C669DC15B7E6666 /* [CP] Check Pods Manifest.lock */,
+				5898041F2E1BBEF000CE9C6D /* Headers */,
+				589804202E1BBEF000CE9C6D /* Sources */,
+				589804212E1BBEF000CE9C6D /* Frameworks */,
+				589804222E1BBEF000CE9C6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				589804262E1BBEF000CE9C6D /* LionmoboData */,
+			);
+			name = LionmoboData;
+			productName = LionmoboData;
+			productReference = 589804242E1BBEF000CE9C6D /* LionmoboData.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5898041B2E1BBEF000CE9C6D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1610;
+				TargetAttributes = {
+					589804232E1BBEF000CE9C6D = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					589804312E1BC00900CE9C6D = {
+						CreatedOnToolsVersion = 16.1;
+					};
+				};
+			};
+			buildConfigurationList = 5898041E2E1BBEF000CE9C6D /* Build configuration list for PBXProject "LionmoboData" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5898041A2E1BBEF000CE9C6D;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 589804252E1BBEF000CE9C6D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				589804232E1BBEF000CE9C6D /* LionmoboData */,
+				589804312E1BC00900CE9C6D /* LionmoboData-Script */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		589804222E1BBEF000CE9C6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0695DA7F9C669DC15B7E6666 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LionmoboData-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		589804372E1BC01E00CE9C6D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#要build的target名\n#!/bin/sh\n#要build的target名\nTARGET_NAME=${PROJECT_NAME}\nif [[ $1 ]]\nthen\nTARGET_NAME=$1\nfi\nUNIVERSAL_OUTPUT_FOLDER=\"${SRCROOT}/${PROJECT_NAME}/\"\n\n#创建输出目录，并删除之前的framework文件\nmkdir -p \"${UNIVERSAL_OUTPUT_FOLDER}\"\nrm -rf \"${UNIVERSAL_OUTPUT_FOLDER}/${TARGET_NAME}.framework\"\n\n#分别编译模拟器和真机的Framework\nxcodebuild -target \"${TARGET_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -target \"${TARGET_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphonesimulator BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n#拷贝framework到univer目录\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${TARGET_NAME}.framework\" \"${UNIVERSAL_OUTPUT_FOLDER}\"\n\nlipo \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${TARGET_NAME}.framework/${TARGET_NAME}\" -remove arm64 -output \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${TARGET_NAME}.framework/${TARGET_NAME}\"\n\n\n#合并framework，输出最终的framework到build目录\nlipo -create -output \"${UNIVERSAL_OUTPUT_FOLDER}/${TARGET_NAME}.framework/${TARGET_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${TARGET_NAME}.framework/${TARGET_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${TARGET_NAME}.framework/${TARGET_NAME}\"\n\n#删除编译之后生成的无关的配置文件\ndir_path=\"${UNIVERSAL_OUTPUT_FOLDER}/${TARGET_NAME}.framework/\"\nfor file in ls $dir_path\ndo\nif [[ ${file} =~ \".xcconfig\" ]]\nthen\nrm -f \"${dir_path}/${file}\"\nfi\ndone\n#判断build文件夹是否存在，存在则删除\nif [ -d \"${SRCROOT}/build\" ]\nthen\nrm -rf \"${SRCROOT}/build\"\nfi\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos\"\n#打开合并后的文件夹\nopen \"${UNIVERSAL_OUTPUT_FOLDER}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		589804202E1BBEF000CE9C6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		589804362E1BC01600CE9C6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 589804232E1BBEF000CE9C6D /* LionmoboData */;
+			targetProxy = 589804352E1BC01600CE9C6D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		5898042D2E1BBEF000CE9C6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F063AAF6874B1B301A91565 /* Pods-LionmoboData.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 4J27TTCT3V;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LionmoboData",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lionmono.LionmoboData;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5898042E2E1BBEF000CE9C6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEA504CC554FC9C9A07859A /* Pods-LionmoboData.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 4J27TTCT3V;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LionmoboData",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lionmono.LionmoboData;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5898042F2E1BBEF000CE9C6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		589804302E1BBEF000CE9C6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		589804332E1BC00900CE9C6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4J27TTCT3V;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		589804342E1BC00900CE9C6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4J27TTCT3V;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5898041E2E1BBEF000CE9C6D /* Build configuration list for PBXProject "LionmoboData" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5898042F2E1BBEF000CE9C6D /* Debug */,
+				589804302E1BBEF000CE9C6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5898042C2E1BBEF000CE9C6D /* Build configuration list for PBXNativeTarget "LionmoboData" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5898042D2E1BBEF000CE9C6D /* Debug */,
+				5898042E2E1BBEF000CE9C6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		589804322E1BC00900CE9C6D /* Build configuration list for PBXAggregateTarget "LionmoboData-Script" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				589804332E1BC00900CE9C6D /* Debug */,
+				589804342E1BC00900CE9C6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5898041B2E1BBEF000CE9C6D /* Project object */;
+}
