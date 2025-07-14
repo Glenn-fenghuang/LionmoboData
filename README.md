@@ -1,118 +1,159 @@
 # LionmoboData iOS SDK
 
-一个功能强大的 iOS 数据分析 SDK，专门用于收集应用内用户行为数据。
+[![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)](https://developer.apple.com/ios/)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Glenn-fenghuang/LionmoboData)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![iOS Deployment Target](https://img.shields.io/badge/iOS-9.0%2B-blue.svg)](https://developer.apple.com/ios/)
 
-## 📋 概述
+LionmoboData iOS SDK 是一个企业级数据分析和统计框架，为 iOS 应用提供全面的用户行为分析、性能监控和崩溃报告功能。
 
-LionmoboData SDK 提供了完整的数据追踪解决方案，包括：
+## ✨ 核心特性
 
-- 🎯 **用户行为追踪**: 自动追踪页面访问、点击事件
-- 🚀 **应用启动监控**: 监控冷启动/热启动性能  
-- 💥 **崩溃报告**: 自动收集和上报应用崩溃信息
-- 📊 **自定义事件**: 支持自定义业务事件上报
-- 📝 **日志系统**: 完善的分级日志输出
-- 🔔 **通知系统**: 实时的 SDK 状态通知
+### 📊 数据收集与分析
+- **页面访问统计** - 自动追踪用户页面浏览路径和停留时间
+- **用户行为分析** - 精确记录点击事件、手势操作和交互行为
+- **自定义事件追踪** - 支持业务自定义埋点和事件上报
 
-## 🛠 系统要求
+### 🔍 性能监控
+- **应用启动监控** - 监控冷启动、热启动性能指标
+- **实时性能分析** - 内存使用、CPU 占用等关键指标监控
+- **网络请求监控** - API 调用性能和成功率统计
 
-- iOS 9.0 及以上版本
-- Xcode 11.0 及以上版本
-- 支持 Objective-C 和 Swift 项目
+### 🛡️ 稳定性保障
+- **崩溃日志收集** - 自动捕获和上报应用崩溃信息
+- **异常监控** - 实时监控应用异常状态
+- **设备信息收集** - 系统版本、设备型号等环境信息
 
-## 📦 项目结构
+### 🔧 开发者工具
+- **分级日志系统** - 完善的调试和生产环境日志输出
+- **实时通知机制** - SDK 状态变化的即时反馈
+- **数据上报控制** - 灵活的数据上报策略配置
 
+## 📋 系统要求
+
+| 平台 | 最低版本 | 开发工具 |
+|------|----------|----------|
+| iOS | 9.0+ | Xcode 11.0+ |
+| 架构 | arm64, x86_64 | - |
+| 语言支持 | Objective-C, Swift | - |
+
+## 🛠 安装集成
+
+### CocoaPods 集成
+
+在 `Podfile` 中添加：
+
+```ruby
+platform :ios, '9.0'
+use_frameworks!
+
+target 'YourApp' do
+  pod 'LionmoboData', :git => 'https://github.com/Glenn-fenghuang/LionmoboData.git', :tag => '1.0.0'
+end
 ```
-LionmoboData/
-├── LionmoboData/                    # SDK 源码
-│   ├── Core/                        # 核心模块
-│   ├── PageTracking/               # 页面追踪
-│   ├── CrashManager/               # 崩溃管理
-│   ├── Logging/                    # 日志系统
-│   ├── Notification/               # 通知管理
-│   └── Utils/                      # 工具类
-├── LionmoboDemo/                   # 示例项目
-├── build.sh                       # 构建脚本
-├── Podfile                         # CocoaPods 配置
-└── LionmoboData_SDK_使用文档.md    # 详细使用文档
+
+执行安装：
+```bash
+pod install
 ```
+
+### 手动集成
+
+1. 下载 `LionmoboData.xcframework`
+2. 拖拽到 Xcode 项目中
+3. 在 **Target Settings** → **General** → **Frameworks, Libraries, and Embedded Content** 中设置为 **Embed & Sign**
 
 ## 🚀 快速开始
 
-### 1. 导入 SDK
+### 1. 初始化配置
+
+在 `AppDelegate.m` 中添加初始化代码：
 
 ```objc
 #import <LionmoboData/LionmoboData.h>
+
+- (BOOL)application:(UIApplication *)application 
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    // 创建配置对象
+    LionmoboDataConfig *config = [[LionmoboDataConfig alloc] init];
+    config.appID = @"your_app_id";
+    config.serverURL = @"https://your-server.com/api";
+    config.apiKey = @"your_api_key";
+    config.debugMode = YES; // 开发环境建议开启
+    
+    // 功能开关
+    config.pageTrackingEnabled = YES;
+    config.clickTrackingEnabled = YES;
+    config.crashReportingEnabled = YES;
+    
+    // 启动 SDK
+    [LionmoboData startWithConfig:config];
+    
+    return YES;
+}
 ```
 
-### 2. 初始化配置
+### 2. 基础使用
 
 ```objc
-LionmoboDataConfig *config = [[LionmoboDataConfig alloc] init];
-config.appID = @"你的应用ID（大数据平台分配）";
-config.serverURL = @"你的服务器地址";
-config.apiKey = @"你的API密钥（登录大数据平台，个人资料中获取）";
-config.apiSecret = @"你的apiSecret密钥（登录大数据平台，个人资料中获取）";
-config.debugMode = YES; // 开发阶段建议开启
+// 自定义事件追踪
+[[LionmoboData sharedInstance] trackEvent:@"button_click" 
+                               properties:@{@"button_name": @"purchase"}];
 
-[LionmoboData startWithConfig:config];
+// 页面访问统计
+[[LionmoboData sharedInstance] trackPageView:@"ProductDetailPage" 
+                                   properties:@{@"product_id": @"12345"}];
 ```
 
-### 3. 基本使用
+## 📚 API 文档
 
-```objc
-// 设置用户ID
-[LionmoboData setUserID:@"user123"];
+详细的 API 文档和使用示例，请参考：
 
-// 上报自定义事件
-[LionmoboData customEventName:@"button_click" detail:@{
-    @"button_name": @"购买按钮",
-    @"page": @"商品详情页"
-}];
-```
+- [完整使用文档](./LionmoboData_SDK_使用文档.md) - 包含所有功能的详细说明
+- [示例项目](./LionmoboDemo/) - 完整的集成示例和最佳实践
 
-## 📚 详细文档
+## 🔧 配置选项
 
-完整的使用文档请查看：[LionmoboData_SDK_使用文档.md](./LionmoboData_SDK_使用文档.md)
-
-文档包含：
-- 详细的安装和集成步骤
-- 完整的 API 参考
-- 最佳实践指南
-- 常见问题解答
-
-## 🏗 构建 SDK
-
-使用提供的构建脚本生成 XCFramework：
-
-```bash
-chmod +x build.sh
-./build.sh
-```
+| 配置项 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `appID` | NSString | - | 应用唯一标识符（必填） |
+| `serverURL` | NSString | - | 数据上报服务器地址（必填） |
+| `apiKey` | NSString | - | API 密钥（必填） |
+| `debugMode` | BOOL | NO | 调试模式开关 |
+| `pageTrackingEnabled` | BOOL | YES | 页面访问追踪 |
+| `clickTrackingEnabled` | BOOL | YES | 点击事件追踪 |
+| `crashReportingEnabled` | BOOL | YES | 崩溃报告收集 |
 
 ## 📱 示例项目
 
-项目包含了一个完整的示例应用 `LionmoboDemo`，展示了 SDK 的各种功能使用方法。
+本 SDK 提供了完整的示例项目，展示了所有功能的集成方式：
 
-要运行示例项目：
+```bash
+# 运行示例项目
+cd LionmoboDemo
+open LionmoboDemo.xcodeproj
+```
 
-1. 打开 `LionmoboData.xcworkspace`
-2. 选择 `LionmoboDemo` target
-3. 运行项目
+示例项目包含：
+- SDK 初始化和配置
+- 页面访问统计实现
+- 自定义事件埋点
+- 崩溃报告测试
+- 性能监控演示
 
-## 🔧 依赖
+## 🤝 技术支持
 
-- **AFNetworking**: 网络请求处理
-- **Masonry**: Auto Layout 库（仅示例项目使用）
+如果您在使用过程中遇到任何问题，请通过以下方式联系我们：
+
+- **技术文档**: [查看完整文档](./LionmoboData_SDK_使用文档.md)
+- **问题反馈**: [GitHub Issues](https://github.com/Glenn-fenghuang/LionmoboData/issues)
+- **邮件支持**: glenn-fenghuang@lionmobo.com
 
 ## 📄 许可证
 
-本项目为私有项目，版权归 Lionmobo 所有。
-
-## 📞 技术支持
-
-如有问题，请联系技术支持团队。
+本项目基于 [MIT 许可证](LICENSE) 开源。
 
 ---
 
-**SDK 版本**: 1.0.0  
-**最后更新**: 2025年7月14日 
+**© 2025 Lionmobo. All rights reserved.** 

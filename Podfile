@@ -1,23 +1,17 @@
 # Uncomment the next line to define a global platform for your project
-workspace 'LionmoboData.xcworkspace'
 platform :ios, '9.0'
 
-target 'LionmoboData' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  project './LionmoboData/LionmoboData.xcodeproj'
-  use_frameworks!
-
-  # Pods for LionmoboData
-  pod 'AFNetworking'
-
-end
-
 target 'LionmoboDemo' do
-  project './LionmoboDemo/LionmoboDemo.xcodeproj'
+  # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-   
+
   # Pods for LionmoboDemo
   pod 'AFNetworking'
   pod 'Masonry'
+  
+  # LionmoboData SDK - 使用本地 XCFramework
+  # 将 LionmoboData.xcframework 添加到项目中，或者使用下面的方式
+  # pod 'LionmoboData', :path => './LionmoboData.xcframework'
+
 end
 
