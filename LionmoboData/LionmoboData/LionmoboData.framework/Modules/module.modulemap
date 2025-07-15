@@ -1,6 +1,0 @@
-framework module LionmoboData {
-  umbrella header "LionmoboData.h"
-  export *
-
-  module * { export * }
-}
