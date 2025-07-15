@@ -30,7 +30,7 @@ FOUNDATION_EXPORT NSString * const LionmoboDataAllCrashReportsUploadCompletedNot
 FOUNDATION_EXPORT NSString * const LionmoboDataAllCrashReportsClearedNotification;
 
 /**
- * 通知UserInfo键名常量
+ * 键名常量
  */
 FOUNDATION_EXPORT NSString * const LionmoboDataNotificationConfigKey;
 FOUNDATION_EXPORT NSString * const LionmoboDataNotificationErrorKey;

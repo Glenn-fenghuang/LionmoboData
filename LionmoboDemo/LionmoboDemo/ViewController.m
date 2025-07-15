@@ -13,134 +13,195 @@
 
 @interface ViewController ()
 
+@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, assign) BOOL isSDKInitialized;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupUI];
+    
+    self.view.backgroundColor = [UIColor systemBackgroundColor];
+    self.title = @"LionmoboData SDK 演示";
+    
+    // 初始化数据
     [self setupDemoData];
+    
+    // 设置UI
+    [self setupUI];
+    
+    // 设置通知监听
     [self setupNotifications];
+    
+    // 检查SDK状态
+    [self updateSDKStatus];
 }
 
-- (void)setupUI {
-    self.view.backgroundColor = [UIColor systemBackgroundColor];
-    self.title = @"LionmoboData SDK演示";
-    
-    // SDK状态标签
-    self.sdkStatusLabel = [[UILabel alloc] init];
-    self.sdkStatusLabel.frame = CGRectMake(20, 100, self.view.frame.size.width - 40, 30);
-    self.sdkStatusLabel.text = @"SDK状态: 未初始化";
-    self.sdkStatusLabel.textColor = [UIColor redColor];
-    self.sdkStatusLabel.font = [UIFont boldSystemFontOfSize:16];
-    self.sdkStatusLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:self.sdkStatusLabel];
-    
-    // 初始化按钮
-    self.customButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.customButton.frame = CGRectMake(20, 140, self.view.frame.size.width - 40, 44);
-    self.customButton.backgroundColor = [UIColor systemBlueColor];
-    [self.customButton setTitle:@"初始化 LionmoboData SDK" forState:UIControlStateNormal];
-    [self.customButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.customButton.layer.cornerRadius = 8;
-    [self.customButton addTarget:self action:@selector(initializeSDK) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.customButton];
-    
-    // 表格视图
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 200, self.view.frame.size.width, self.view.frame.size.height - 200) style:UITableViewStyleGrouped];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.backgroundColor = [UIColor systemBackgroundColor];
-    [self.view addSubview:self.tableView];
-}
+#pragma mark - 数据初始化
 
 - (void)setupDemoData {
     self.demoSections = @[
         @{
+            @"title": @"🚀 SDK 初始化",
+            @"items": @[
+                @{@"title": @"初始化 SDK", @"subtitle": @"配置并启动 SDK", @"action": @"initSDK"},
+                @{@"title": @"获取 SDK 信息", @"subtitle": @"版本号、状态等", @"action": @"showSDKInfo"},
+                @{@"title": @"配置 Debug 模式", @"subtitle": @"开启/关闭调试", @"action": @"toggleDebugMode"}
+            ]
+        },
+        @{
             @"title": @"👤 用户管理",
             @"items": @[
-                @{@"title": @"设置用户ID", @"action": @"setUserID"},
-                @{@"title": @"获取设备ID", @"action": @"getDeviceID"},
-                @{@"title": @"请求IDFA权限", @"action": @"requestIDFA"},
-                @{@"title": @"获取IDFA", @"action": @"getIDFA"}
+                @{@"title": @"设置用户 ID", @"subtitle": @"设置当前用户标识", @"action": @"setUserID"},
+                @{@"title": @"获取 IDFA 权限", @"subtitle": @"请求 IDFA 追踪权限", @"action": @"requestIDFA"},
+                @{@"title": @"设置 IDFA", @"subtitle": @"上报设备 IDFA", @"action": @"setIDFA"}
             ]
         },
         @{
             @"title": @"📊 事件追踪",
             @"items": @[
-                @{@"title": @"发送自定义事件", @"action": @"sendCustomEvent"},
-                @{@"title": @"商品查看事件", @"action": @"sendProductView"},
-                @{@"title": @"购买事件", @"action": @"sendPurchaseEvent"},
-                @{@"title": @"页面跟踪演示", @"action": @"showPageTracking"}
+                @{@"title": @"自定义事件", @"subtitle": @"发送自定义事件", @"action": @"sendCustomEvent"},
+                @{@"title": @"页面跟踪演示", @"subtitle": @"进入页面跟踪演示", @"action": @"showPageTracking"},
+                @{@"title": @"点击事件演示", @"subtitle": @"测试点击事件追踪", @"action": @"testClickTracking"}
             ]
         },
         @{
-            @"title": @"📝 日志系统",
+            @"title": @"🔧 日志系统",
             @"items": @[
-                @{@"title": @"Debug日志", @"action": @"logDebug"},
-                @{@"title": @"Info日志", @"action": @"logInfo"},
-                @{@"title": @"Warning日志", @"action": @"logWarning"},
-                @{@"title": @"Error日志", @"action": @"logError"}
+                @{@"title": @"日志输出测试", @"subtitle": @"测试各级别日志", @"action": @"testLogging"},
+                @{@"title": @"开启/关闭日志", @"subtitle": @"控制日志输出", @"action": @"toggleLogging"},
+                @{@"title": @"查看日志状态", @"subtitle": @"当前日志配置", @"action": @"showLogStatus"}
             ]
         },
         @{
             @"title": @"🔔 通知系统",
             @"items": @[
-                @{@"title": @"SDK事件通知", @"action": @"showSDKNotifications"},
-                @{@"title": @"数据上传通知", @"action": @"showUploadNotifications"},
-                @{@"title": @"错误通知", @"action": @"showErrorNotifications"}
+                @{@"title": @"注册通知监听", @"subtitle": @"监听 SDK 通知", @"action": @"registerNotifications"},
+                @{@"title": @"通知历史", @"subtitle": @"查看接收到的通知", @"action": @"showNotificationHistory"},
+                @{@"title": @"模拟通知", @"subtitle": @"发送测试通知", @"action": @"simulateNotification"}
             ]
         },
         @{
-            @"title": @"🔧 高级功能",
+            @"title": @"🧪 高级功能",
             @"items": @[
-                @{@"title": @"模拟崩溃", @"action": @"simulateCrash"},
-                @{@"title": @"网络状态监控", @"action": @"checkNetworkStatus"},
-                @{@"title": @"设备信息", @"action": @"showDeviceInfo"},
-                @{@"title": @"清除数据", @"action": @"clearData"}
+                @{@"title": @"崩溃测试", @"subtitle": @"测试崩溃报告功能", @"action": @"testCrash"},
+                @{@"title": @"网络状态监控", @"subtitle": @"监控网络连接状态", @"action": @"monitorNetwork"},
+                @{@"title": @"设备信息", @"subtitle": @"获取设备相关信息", @"action": @"showDeviceInfo"}
             ]
         }
     ];
 }
 
-- (void)setupNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleSDKNotification:)
-                                                 name:@"LionmoboDataEventSent"
-                                               object:nil];
+#pragma mark - UI 设置
+
+- (void)setupUI {
+    // 头部状态视图
+    [self setupHeaderView];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleSDKNotification:)
-                                                 name:@"LionmoboDataError"
-                                               object:nil];
+    // 表格视图
+    [self setupTableView];
+    
+    // 约束设置
+    [self setupConstraints];
 }
 
-#pragma mark - SDK初始化
+- (void)setupHeaderView {
+    self.headerView = [[UIView alloc] init];
+    self.headerView.backgroundColor = [UIColor systemBlueColor];
+    self.headerView.layer.cornerRadius = 12;
+    self.headerView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.headerView];
+    
+    // SDK 状态标签
+    self.sdkStatusLabel = [[UILabel alloc] init];
+    self.sdkStatusLabel.text = @"🔴 SDK 未初始化";
+    self.sdkStatusLabel.textColor = [UIColor whiteColor];
+    self.sdkStatusLabel.font = [UIFont boldSystemFontOfSize:16];
+    self.sdkStatusLabel.textAlignment = NSTextAlignmentCenter;
+    self.sdkStatusLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.headerView addSubview:self.sdkStatusLabel];
+    
+    // 初始化按钮
+    self.customButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.customButton setTitle:@"立即初始化" forState:UIControlStateNormal];
+    [self.customButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.customButton.backgroundColor = [UIColor systemOrangeColor];
+    self.customButton.layer.cornerRadius = 8;
+    self.customButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    [self.customButton addTarget:self action:@selector(initSDK) forControlEvents:UIControlEventTouchUpInside];
+    self.customButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.headerView addSubview:self.customButton];
+}
 
-- (void)initializeSDK {
-    NSLog(@"🚀 开始初始化 LionmoboData SDK...");
+- (void)setupTableView {
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleInsetGrouped];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.tableView];
+}
+
+- (void)setupConstraints {
+    [NSLayoutConstraint activateConstraints:@[
+        // 头部视图
+        [self.headerView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:10],
+        [self.headerView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:16],
+        [self.headerView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-16],
+        [self.headerView.heightAnchor constraintEqualToConstant:80],
+        
+        // SDK 状态标签
+        [self.sdkStatusLabel.topAnchor constraintEqualToAnchor:self.headerView.topAnchor constant:12],
+        [self.sdkStatusLabel.leadingAnchor constraintEqualToAnchor:self.headerView.leadingAnchor constant:16],
+        [self.sdkStatusLabel.trailingAnchor constraintEqualToAnchor:self.headerView.trailingAnchor constant:-16],
+        
+        // 初始化按钮
+        [self.customButton.topAnchor constraintEqualToAnchor:self.sdkStatusLabel.bottomAnchor constant:8],
+        [self.customButton.centerXAnchor constraintEqualToAnchor:self.headerView.centerXAnchor],
+        [self.customButton.widthAnchor constraintEqualToConstant:120],
+        [self.customButton.heightAnchor constraintEqualToConstant:32],
+        
+        // 表格视图
+        [self.tableView.topAnchor constraintEqualToAnchor:self.headerView.bottomAnchor constant:10],
+        [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
+    ]];
+}
+
+#pragma mark - 通知设置
+
+- (void)setupNotifications {
+    [LionmoboDataNotificationManager addObserver:self
+                                         selector:@selector(onSDKInitialized:)
+                                             name:LionmoboDataDidInitializeNotification];
     
-    // 配置SDK
-    LionmoboDataConfig *config = [[LionmoboDataConfig alloc] init];
-    config.appID = @"10002";
-    config.serverURL = @"http://sz.lionmobo.net:8070";
-    config.enableAutoPageTracking = YES;
-    config.enableAutoClickTracking = YES;
-    config.enableCrashReporting = YES;
-    config.logLevel = LionmoboDataLogLevelDebug;
+    [LionmoboDataNotificationManager addObserver:self
+                                         selector:@selector(onSDKInitializeFailed:)
+                                             name:LionmoboDataDidFailToInitializeNotification];
     
-    // 初始化SDK
-    [[LionmoboDataCore sharedInstance] initializeWithConfig:config];
+    [LionmoboDataNotificationManager addObserver:self
+                                         selector:@selector(onConfigChanged:)
+                                             name:LionmoboDataConfigDidChangeNotification];
+}
+
+#pragma mark - SDK 状态更新
+
+- (void)updateSDKStatus {
+    self.isSDKInitialized = [LionmoboDataCore isInitialized];
     
-    // 更新UI状态
-    self.sdkStatusLabel.text = @"SDK状态: 已初始化 ✅";
-    self.sdkStatusLabel.textColor = [UIColor systemGreenColor];
-    [self.customButton setTitle:@"SDK已初始化 ✅" forState:UIControlStateNormal];
-    self.customButton.backgroundColor = [UIColor systemGreenColor];
-    self.customButton.enabled = NO;
-    
-    NSLog(@"✅ LionmoboData SDK 初始化完成！");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.isSDKInitialized) {
+            self.sdkStatusLabel.text = @"🟢 SDK 已初始化";
+            self.customButton.hidden = YES;
+            self.headerView.backgroundColor = [UIColor systemGreenColor];
+        } else {
+            self.sdkStatusLabel.text = @"🔴 SDK 未初始化";
+            self.customButton.hidden = NO;
+            self.headerView.backgroundColor = [UIColor systemRedColor];
+        }
+    });
 }
 
 #pragma mark - UITableView DataSource
@@ -155,12 +216,17 @@
     return items.count;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSDictionary *sectionData = self.demoSections[section];
+    return sectionData[@"title"];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"DemoCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
@@ -169,14 +235,10 @@
     NSDictionary *item = items[indexPath.row];
     
     cell.textLabel.text = item[@"title"];
-    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    cell.detailTextLabel.text = item[@"subtitle"];
+    cell.detailTextLabel.textColor = [UIColor systemGrayColor];
     
     return cell;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSDictionary *sectionData = self.demoSections[section];
-    return sectionData[@"title"];
 }
 
 #pragma mark - UITableView Delegate
@@ -187,10 +249,10 @@
     NSDictionary *sectionData = self.demoSections[indexPath.section];
     NSArray *items = sectionData[@"items"];
     NSDictionary *item = items[indexPath.row];
-    NSString *action = item[@"action"];
     
-    // 执行对应的演示功能
+    NSString *action = item[@"action"];
     SEL selector = NSSelectorFromString(action);
+    
     if ([self respondsToSelector:selector]) {
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -199,31 +261,96 @@
     }
 }
 
-#pragma mark - 用户管理演示
+#pragma mark - SDK 功能演示方法
 
-- (void)setUserID {
-    NSString *userID = [NSString stringWithFormat:@"user_%ld", (long)[[NSDate date] timeIntervalSince1970]];
-    [[LionmoboDataCore sharedInstance] setUserID:userID];
+- (void)initSDK {
+    LionmoboDataConfig *config = [[LionmoboDataConfig alloc] init];
+    config.appID = @"demo_app_001";
+    config.serverURL = @"https://api.lionmobo.com";
+    config.apiKey = @"demo_api_key_123";
+    config.apiSecret = @"demo_api_secret_456";
+    config.debugMode = YES;
+    config.crashReportingEnabled = YES;
+    config.networkLoggingEnabled = YES;
+    config.pageTrackingEnabled = YES;
+    config.clickTrackingEnabled = YES;
+    config.launchTrackingEnabled = YES;
+    config.timeoutInterval = 30.0;
+    config.pagePathTrackingMode = 0;
+    config.hotStartTimeoutInterval = 30.0;
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"用户ID设置"
-                                                                   message:[NSString stringWithFormat:@"已设置用户ID: %@", userID]
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
+    [LionmoboDataCore startWithConfig:config];
     
-    NSLog(@"👤 设置用户ID: %@", userID);
+    [self showAlert:@"SDK 初始化" message:@"正在初始化 SDK，请等待通知..."];
 }
 
-- (void)getDeviceID {
-    NSString *deviceID = [[LionmoboDataCore sharedInstance] getDeviceID];
+- (void)showSDKInfo {
+    if (![LionmoboDataCore isInitialized]) {
+        [self showAlert:@"错误" message:@"请先初始化 SDK"];
+        return;
+    }
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"设备ID"
-                                                                   message:[NSString stringWithFormat:@"设备ID: %@", deviceID]
+    NSString *version = [LionmoboDataCore sdkVersion];
+    LionmoboDataConfig *config = [LionmoboDataCore currentConfig];
+    
+    NSString *info = [NSString stringWithFormat:@"SDK 版本: %@\n应用 ID: %@\n服务器地址: %@\n调试模式: %@\n页面追踪: %@\n点击追踪: %@",
+                     version,
+                     config.appID,
+                     config.serverURL,
+                     config.debugMode ? @"开启" : @"关闭",
+                     config.pageTrackingEnabled ? @"开启" : @"关闭",
+                     config.clickTrackingEnabled ? @"开启" : @"关闭"];
+    
+    [self showAlert:@"SDK 信息" message:info];
+}
+
+- (void)toggleDebugMode {
+    if (![LionmoboDataCore isInitialized]) {
+        [self showAlert:@"错误" message:@"请先初始化 SDK"];
+        return;
+    }
+    
+    LionmoboDataConfig *config = [LionmoboDataCore currentConfig];
+    config.debugMode = !config.debugMode;
+    
+    [self showAlert:@"调试模式" message:config.debugMode ? @"已开启调试模式" : @"已关闭调试模式"];
+}
+
+- (void)setUserID {
+    if (![LionmoboDataCore isInitialized]) {
+        [self showAlert:@"错误" message:@"请先初始化 SDK"];
+        return;
+    }
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"设置用户 ID"
+                                                                   message:@"请输入用户 ID"
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
     
-    NSLog(@"📱 设备ID: %@", deviceID);
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"user_12345";
+        textField.text = @"demo_user_001";
+    }];
+    
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction *action) {
+        UITextField *textField = alert.textFields.firstObject;
+        NSString *userID = textField.text;
+        
+        if (userID.length > 0) {
+            [LionmoboDataCore setUserID:userID];
+            [self showAlert:@"成功" message:[NSString stringWithFormat:@"用户 ID 已设置为: %@", userID]];
+        }
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    
+    [alert addAction:cancelAction];
+    [alert addAction:confirmAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)requestIDFA {
@@ -232,292 +359,199 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSString *statusString = @"";
                 switch (status) {
-                    case ATTrackingManagerAuthorizationStatusAuthorized:
-                        statusString = @"已授权";
-                        break;
-                    case ATTrackingManagerAuthorizationStatusDenied:
-                        statusString = @"已拒绝";
-                        break;
                     case ATTrackingManagerAuthorizationStatusNotDetermined:
                         statusString = @"未确定";
                         break;
                     case ATTrackingManagerAuthorizationStatusRestricted:
-                        statusString = @"受限制";
+                        statusString = @"受限";
+                        break;
+                    case ATTrackingManagerAuthorizationStatusDenied:
+                        statusString = @"拒绝";
+                        break;
+                    case ATTrackingManagerAuthorizationStatusAuthorized:
+                        statusString = @"已授权";
+                        // 获取 IDFA
+                        NSString *idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+                        [LionmoboDataCore setDeviceWithIdfa:idfa];
                         break;
                 }
                 
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"IDFA权限请求"
-                                                                               message:[NSString stringWithFormat:@"权限状态: %@", statusString]
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-                [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-                [self presentViewController:alert animated:YES completion:nil];
-                
-                NSLog(@"🔐 IDFA权限状态: %@", statusString);
+                [self showAlert:@"IDFA 权限请求" message:[NSString stringWithFormat:@"当前状态: %@", statusString]];
             });
         }];
     } else {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"IDFA权限"
-                                                                       message:@"iOS 14.5以下版本无需请求IDFA权限"
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
+        // iOS 14.5 以下版本直接获取 IDFA
+        NSString *idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        [LionmoboDataCore setDeviceWithIdfa:idfa];
+        [self showAlert:@"IDFA" message:@"已自动获取并设置 IDFA"];
     }
 }
 
-- (void)getIDFA {
+- (void)setIDFA {
+    if (![LionmoboDataCore isInitialized]) {
+        [self showAlert:@"错误" message:@"请先初始化 SDK"];
+        return;
+    }
+    
     NSString *idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    [LionmoboDataCore setDeviceWithIdfa:idfa];
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"IDFA"
-                                                                   message:[NSString stringWithFormat:@"IDFA: %@", idfa]
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    NSLog(@"🆔 IDFA: %@", idfa);
+    [self showAlert:@"IDFA 设置" message:[NSString stringWithFormat:@"已设置 IDFA: %@", idfa]];
 }
-
-#pragma mark - 事件追踪演示
 
 - (void)sendCustomEvent {
-    NSDictionary *properties = @{
-        @"action": @"button_click",
-        @"button_name": @"custom_event_demo",
-        @"timestamp": @([[NSDate date] timeIntervalSince1970]),
-        @"user_level": @"premium"
-    };
+    if (![LionmoboDataCore isInitialized]) {
+        [self showAlert:@"错误" message:@"请先初始化 SDK"];
+        return;
+    }
     
-    [[LionmoboDataCore sharedInstance] trackEvent:@"custom_event" properties:properties];
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"自定义事件"
-                                                                   message:@"已发送自定义事件 ✅"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    NSLog(@"📊 发送自定义事件: custom_event，属性: %@", properties);
-}
-
-- (void)sendProductView {
-    NSDictionary *properties = @{
-        @"product_id": @"lion_crispy_001",
+    NSDictionary *eventDetail = @{
         @"product_name": @"狮乐购牛脆片",
-        @"category": @"零食",
+        @"product_id": @"12345",
         @"price": @29.9,
-        @"currency": @"CNY"
-    };
-    
-    [[LionmoboDataCore sharedInstance] trackEvent:@"product_view" properties:properties];
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"商品查看事件"
-                                                                   message:@"已记录商品查看: 狮乐购牛脆片 ✅"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    NSLog(@"🛍️ 商品查看事件: %@", properties);
-}
-
-- (void)sendPurchaseEvent {
-    NSDictionary *properties = @{
-        @"product_id": @"lion_crispy_001",
-        @"product_name": @"狮乐购牛脆片",
         @"quantity": @2,
-        @"total_amount": @59.8,
-        @"currency": @"CNY",
-        @"payment_method": @"alipay"
+        @"category": @"零食",
+        @"timestamp": @([[NSDate date] timeIntervalSince1970])
     };
     
-    [[LionmoboDataCore sharedInstance] trackEvent:@"purchase" properties:properties];
+    [LionmoboDataCore customEventName:@"product_purchase" detail:eventDetail];
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"购买事件"
-                                                                   message:@"已记录购买: 狮乐购牛脆片 x2 ✅"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    NSLog(@"💰 购买事件: %@", properties);
+    [self showAlert:@"自定义事件" message:@"已发送 'product_purchase' 事件"];
 }
 
 - (void)showPageTracking {
-    SecondViewController *pageTrackingVC = [[SecondViewController alloc] init];
-    [self.navigationController pushViewController:pageTrackingVC animated:YES];
+    SecondViewController *secondVC = [[SecondViewController alloc] init];
+    [self.navigationController pushViewController:secondVC animated:YES];
 }
 
-#pragma mark - 日志系统演示
+- (void)testClickTracking {
+    [self showAlert:@"点击事件" message:@"此弹窗的显示本身就是一个点击事件追踪的演示！"];
+}
 
-- (void)logDebug {
-    [[LionmoboDataLogger sharedInstance] logWithLevel:LionmoboDataLogLevelDebug message:@"这是一条Debug级别的日志消息"];
+- (void)testLogging {
+    [LionmoboDataLogger logInfo:@"这是一条信息日志"];
+    [LionmoboDataLogger logSuccessInfo:@"这是一条成功日志"];
+    [LionmoboDataLogger logWarning:@"这是一条警告日志"];
+    [LionmoboDataLogger logError:@"这是一条错误日志"];
+    [LionmoboDataLogger logDebug:@"这是一条调试日志"];
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Debug日志"
-                                                                   message:@"已输出Debug日志 ✅\n请查看Xcode控制台"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
+    [self showAlert:@"日志测试" message:@"已输出各级别日志，请查看控制台"];
 }
 
-- (void)logInfo {
-    [[LionmoboDataLogger sharedInstance] logWithLevel:LionmoboDataLogLevelInfo message:@"这是一条Info级别的日志消息"];
+- (void)toggleLogging {
+    BOOL currentStatus = [LionmoboDataLogger isLogEnabled];
+    [LionmoboDataLogger setLogEnabled:!currentStatus];
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Info日志"
-                                                                   message:@"已输出Info日志 ✅\n请查看Xcode控制台"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
+    NSString *message = [LionmoboDataLogger isLogEnabled] ? @"日志输出已开启" : @"日志输出已关闭";
+    [self showAlert:@"日志状态" message:message];
 }
 
-- (void)logWarning {
-    [[LionmoboDataLogger sharedInstance] logWithLevel:LionmoboDataLogLevelWarning message:@"这是一条Warning级别的日志消息"];
+- (void)showLogStatus {
+    BOOL isEnabled = [LionmoboDataLogger isLogEnabled];
+    NSString *status = isEnabled ? @"开启" : @"关闭";
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Warning日志"
-                                                                   message:@"已输出Warning日志 ⚠️\n请查看Xcode控制台"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
+    [self showAlert:@"日志状态" message:[NSString stringWithFormat:@"当前日志输出状态: %@", status]];
 }
 
-- (void)logError {
-    [[LionmoboDataLogger sharedInstance] logWithLevel:LionmoboDataLogLevelError message:@"这是一条Error级别的日志消息"];
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error日志"
-                                                                   message:@"已输出Error日志 ❌\n请查看Xcode控制台"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
+- (void)registerNotifications {
+    // 已在 setupNotifications 中注册
+    [self showAlert:@"通知注册" message:@"SDK 通知监听已注册，初始化 SDK 时将收到通知"];
 }
 
-#pragma mark - 通知系统演示
-
-- (void)showSDKNotifications {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"SDK通知系统"
-                                                                   message:@"SDK已注册通知监听:\n• LionmoboDataEventSent\n• LionmoboDataError\n\n执行其他操作时将收到通知"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
+- (void)showNotificationHistory {
+    [self showAlert:@"通知历史" message:@"请查看控制台输出的通知接收记录"];
 }
 
-- (void)showUploadNotifications {
-    // 模拟数据上传通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"LionmoboDataEventSent" 
-                                                        object:nil 
-                                                      userInfo:@{@"event": @"upload_demo", @"status": @"success"}];
+- (void)simulateNotification {
+    // 模拟发送配置变更通知
+    LionmoboDataConfig *config = [LionmoboDataCore currentConfig];
+    if (config) {
+        [LionmoboDataNotificationManager postConfigChangeNotificationWithConfig:config];
+        [self showAlert:@"模拟通知" message:@"已发送配置变更通知"];
+    } else {
+        [self showAlert:@"模拟通知" message:@"请先初始化 SDK"];
+    }
 }
 
-- (void)showErrorNotifications {
-    // 模拟错误通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"LionmoboDataError" 
-                                                        object:nil 
-                                                      userInfo:@{@"error": @"网络连接失败", @"code": @"E001"}];
-}
-
-#pragma mark - 高级功能演示
-
-- (void)simulateCrash {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"模拟崩溃"
-                                                                   message:@"确定要触发崩溃测试吗？\n⚠️ 应用将会崩溃！"
+- (void)testCrash {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"崩溃测试"
+                                                                   message:@"确定要触发测试崩溃吗？这将导致应用闪退。"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定崩溃" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        // 故意触发崩溃进行测试
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定崩溃"
+                                                            style:UIAlertActionStyleDestructive
+                                                          handler:^(UIAlertAction *action) {
+        // 故意触发崩溃
         NSArray *array = @[];
-        NSLog(@"崩溃测试: %@", array[10]); // 越界访问将导致崩溃
-    }]];
+        NSLog(@"%@", array[10]); // 数组越界崩溃
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    
+    [alert addAction:cancelAction];
+    [alert addAction:confirmAction];
     
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)checkNetworkStatus {
-    // 这里可以集成实际的网络监控功能
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"网络状态"
-                                                                   message:@"网络状态: 已连接 ✅\n网络类型: WiFi\n信号强度: 强"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    NSLog(@"🌐 网络状态检查完成");
+- (void)monitorNetwork {
+    [self showAlert:@"网络监控" message:@"网络状态监控功能已在 SDK 内部运行\n请查看控制台输出的网络状态信息"];
 }
 
 - (void)showDeviceInfo {
-    UIDevice *device = [UIDevice currentDevice];
-    NSString *deviceInfo = [NSString stringWithFormat:@"设备型号: %@\n系统版本: %@\n设备名称: %@\n电池电量: %.0f%%",
-                           device.model,
-                           device.systemVersion,
-                           device.name,
-                           device.batteryLevel * 100];
+    NSString *deviceInfo = [NSString stringWithFormat:@"设备型号: %@\n系统版本: %@\n应用版本: %@\n设备 ID: %@",
+                           [[UIDevice currentDevice] model],
+                           [[UIDevice currentDevice] systemVersion],
+                           [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
+                           [[[UIDevice currentDevice] identifierForVendor] UUIDString]];
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"设备信息"
-                                                                   message:deviceInfo
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    NSLog(@"📱 设备信息: %@", deviceInfo);
+    [self showAlert:@"设备信息" message:deviceInfo];
 }
 
-- (void)clearData {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"清除数据"
-                                                                   message:@"确定要清除所有本地数据吗？"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        // 这里可以调用SDK的数据清除方法
-        NSLog(@"🗑️ 开始清除本地数据...");
-        
-        // 模拟清除过程
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            UIAlertController *successAlert = [UIAlertController alertControllerWithTitle:@"清除完成"
-                                                                                   message:@"所有本地数据已清除 ✅"
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
-            [successAlert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-            [self presentViewController:successAlert animated:YES completion:nil];
-            
-            NSLog(@"✅ 数据清除完成");
-        });
-    }]];
-    
-    [self presentViewController:alert animated:YES completion:nil];
-}
+#pragma mark - 通知响应
 
-#pragma mark - 通知处理
-
-- (void)handleSDKNotification:(NSNotification *)notification {
+- (void)onSDKInitialized:(NSNotification *)notification {
+    NSLog(@"🎉 收到 SDK 初始化成功通知");
+    [self updateSDKStatus];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *notificationName = notification.name;
-        NSDictionary *userInfo = notification.userInfo;
-        
-        NSString *message = [NSString stringWithFormat:@"收到SDK通知:\n%@\n\n详情: %@", notificationName, userInfo];
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"SDK通知"
-                                                                       message:message
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-        NSLog(@"🔔 SDK通知: %@ - %@", notificationName, userInfo);
+        [self showAlert:@"初始化成功" message:@"SDK 已成功初始化！"];
     });
 }
 
-#pragma mark - 生命周期
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    NSLog(@"📄 主页面即将显示");
+- (void)onSDKInitializeFailed:(NSNotification *)notification {
+    NSError *error = notification.userInfo[LionmoboDataNotificationErrorKey];
+    NSLog(@"❌ 收到 SDK 初始化失败通知: %@", error.localizedDescription);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self showAlert:@"初始化失败" message:[NSString stringWithFormat:@"SDK 初始化失败: %@", error.localizedDescription]];
+    });
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    NSLog(@"📄 主页面已显示");
+- (void)onConfigChanged:(NSNotification *)notification {
+    NSLog(@"⚙️ 收到配置变更通知");
+    [self updateSDKStatus];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    NSLog(@"📄 主页面已消失");
+#pragma mark - 辅助方法
+
+- (void)showAlert:(NSString *)title message:(NSString *)message {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    NSLog(@"🗑️ ViewController 已释放");
+    [LionmoboDataNotificationManager removeObserver:self name:nil];
 }
 
 @end
