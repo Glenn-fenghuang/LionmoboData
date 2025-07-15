@@ -1,0 +1,28 @@
+# LionmoboData SDK 集成示例 Podfile
+
+platform :ios, '12.0'
+
+target 'YourAppName' do
+  use_frameworks!
+  
+  # 方法1: 使用指定版本标签（推荐）
+  pod 'LionmoboData', :git => 'https://github.com/Glenn-fenghuang/LionmoboData.git', :tag => '1.0.0'
+  
+  # 方法2: 使用最新代码
+  # pod 'LionmoboData', :git => 'https://github.com/Glenn-fenghuang/LionmoboData.git'
+  
+  # 方法3: 使用特定分支
+  # pod 'LionmoboData', :git => 'https://github.com/Glenn-fenghuang/LionmoboData.git', :branch => 'main'
+  
+  # 其他依赖...
+  
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      # 修复iOS版本兼容性警告
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+    end
+  end
+end 
