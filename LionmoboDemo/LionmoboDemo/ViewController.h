@@ -7,8 +7,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic, strong) NSArray *demoSections;
+@property (nonatomic, strong) UILabel *sdkStatusLabel;
+@property (nonatomic, strong) UIButton *customButton;
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
